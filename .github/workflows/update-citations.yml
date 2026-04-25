@@ -1,0 +1,49 @@
+name: Update Citation Count
+
+on:
+  schedule:
+    - cron: '0 6 * * 1'  # Every Monday at 6am UTC
+  workflow_dispatch:       # Also allows manual trigger from GitHub
+
+jobs:
+  update-citations:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Fetch citation count from Google Scholar
+        id: citations
+        run: |
+          COUNT=$(curl -s -A "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36" \
+            "https://scholar.google.com/citations?user=lG9WsD4AAAAJ&hl=en" \
+            | grep -oP '(?<=<td class="gsc_rsb_std">)\d+' \
+            | head -1)
+          if [ -z "$COUNT" ]; then
+            echo "Could not fetch citation count, skipping update"
+            echo "count=" >> $GITHUB_OUTPUT
+          else
+            echo "Fetched citation count: $COUNT"
+            echo "count=$COUNT" >> $GITHUB_OUTPUT
+          fi
+
+      - name: Update citation count in index.html
+        if: steps.citations.outputs.count != ''
+        run: |
+          COUNT=${{ steps.citations.outputs.count }}
+          # Update all citation number occurrences in the file
+          sed -i "s/id=\"citation-count\">[0-9]*/id=\"citation-count\">$COUNT/g" index.html
+          sed -i "s/id=\"cit-pub\">[0-9]*/id=\"cit-pub\">$COUNT/g" index.html
+          echo "Updated citation count to $COUNT"
+
+      - name: Commit and push if changed
+        if: steps.citations.outputs.count != ''
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add index.html
+          git diff --staged --quiet || git commit -m "Auto-update citation count to ${{ steps.citations.outputs.count }}"
+          git push
