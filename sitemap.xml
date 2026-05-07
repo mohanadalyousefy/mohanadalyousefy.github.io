@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset
+      xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+      xmlns:image="http://www.google.com/schemas/sitemap-image/1.1"
+      xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9
+            http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd">
+  <url>
+    <loc>https://www.mohanadalyousefy.com/</loc>
+    <image:image>
+      <image:loc>https://www.mohanadalyousefy.com/assets/images/Mohanad-Alyousefy.jpg</image:loc>
+      <image:title>Portrait of Mohanad Alyousefy</image:title>
+      <image:caption>Portrait of Mohanad Alyousefy, Research Associate at the WHO Collaborating Centre for Health Literacy, TU München</image:caption>
+    </image:image>
+    <image:image>
+      <image:loc>https://www.mohanadalyousefy.com/assets/images/Mohanad-Alyousefy-WHO-Forum.jpeg</image:loc>
+      <image:title>Mohanad Alyousefy at the WHO Collaborating Centres Global Forum, Lyon 2026</image:title>
+      <image:caption>Mohanad Alyousefy at the WHO Collaborating Centres Global Forum, Lyon, April 2026</image:caption>
+    </image:image>
+    <lastmod>2026-04-25T00:00:00+00:00</lastmod>
+  </url>
+</urlset>
